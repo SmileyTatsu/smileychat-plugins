@@ -1,0 +1,13 @@
+{
+  "id": "smiley-example-tools",
+  "name": "Smiley Example Tools",
+  "description": "Example plugin entry for registry pull requests.",
+  "version": "1.0.0",
+  "author": "Example Author",
+  "category": "tools",
+  "status": "verified",
+  "archive": {
+    "url": "https://github.com/SmileyTatsu/example-tools/releases/download/v1.0.0/example-tools.zip",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
