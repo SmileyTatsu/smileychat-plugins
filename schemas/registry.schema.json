@@ -1,92 +1,90 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/SmileyTatsu/smileychat-plugins/main/schemas/registry.schema.json",
-  "title": "SmileyChat Plugin Registry",
-  "type": "object",
-  "additionalProperties": false,
-  "required": ["version", "plugins"],
-  "properties": {
-    "version": {
-      "const": 1
-    },
-    "plugins": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/plugin"
-      },
-      "uniqueItems": true
-    }
-  },
-  "$defs": {
-    "sha256": {
-      "type": "string",
-      "pattern": "^[a-fA-F0-9]{64}$"
-    },
-    "archive": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["url", "sha256"],
-      "properties": {
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "pattern": "^https://"
-        },
-        "sha256": {
-          "$ref": "#/$defs/sha256"
-        }
-      }
-    },
-    "plugin": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "id",
-        "name",
-        "version",
-        "category",
-        "status",
-        "archive"
-      ],
-      "properties": {
-        "id": {
-          "type": "string",
-          "pattern": "^[A-Za-z0-9._-]+$"
-        },
-        "name": {
-          "type": "string",
-          "minLength": 1
-        },
-        "description": {
-          "type": "string",
-          "minLength": 1
-        },
+﻿{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/SmileyTatsu/smileychat-plugins/main/schemas/registry.schema.json",
+    "title": "SmileyChat Plugin Registry",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["version", "plugins"],
+    "properties": {
         "version": {
-          "type": "string",
-          "minLength": 1
+            "const": 1
         },
-        "author": {
-          "type": "string",
-          "minLength": 1
-        },
-        "category": {
-          "enum": [
-            "interface",
-            "input-output",
-            "automation",
-            "connections",
-            "tools",
-            "memory-lore",
-            "other"
-          ]
-        },
-        "status": {
-          "enum": ["official", "verified"]
-        },
-        "archive": {
-          "$ref": "#/$defs/archive"
+        "plugins": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/plugin"
+            }
         }
-      }
+    },
+    "$defs": {
+        "artifact": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["url"],
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "^https://.*\\.zip([?#].*)?$"
+                }
+            }
+        },
+        "plugin": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "name",
+                "version",
+                "category",
+                "status",
+                "artifact"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "pattern": "^(?!\\.\\.?$)[A-Za-z0-9._-]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "description": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "version": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "author": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "category": {
+                    "enum": [
+                        "interface",
+                        "input-output",
+                        "automation",
+                        "connections",
+                        "tools",
+                        "memory-lore",
+                        "other"
+                    ]
+                },
+                "status": {
+                    "enum": ["official", "verified"]
+                },
+                "repository": {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "^https://"
+                },
+                "artifact": {
+                    "$ref": "#/$defs/artifact"
+                }
+            }
+        }
     }
-  }
 }
+

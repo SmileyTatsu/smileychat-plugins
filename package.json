@@ -1,0 +1,9 @@
+﻿{
+    "name": "smileychat-plugins",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "validate": "bun ./scripts/validate-registry.ts"
+    }
+}

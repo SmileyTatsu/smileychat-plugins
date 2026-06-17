@@ -1,15 +1,19 @@
-# Security Policy
+﻿# Security Policy
 
-Report malicious plugins, compromised plugin URLs, or registry integrity issues privately to the SmileyChat maintainers.
+Report malicious plugins, compromised artifact URLs, or registry integrity issues privately to the SmileyChat maintainers.
 
 ## Registry Integrity
 
-SmileyChat checks SHA-256 hashes for every file before installing a registry plugin. If a plugin repository changes a file without a registry update, installation should fail.
+The registry is a curated trust list for prebuilt plugin artifacts. A registry listing means the artifact was accepted for distribution; it does not sandbox plugin code.
+
+Use versioned artifact URLs, preferably GitHub Release assets. Do not use mutable branch archives for verified registry entries.
 
 ## Plugin Trust
 
-Plugins are trusted local code. A registry listing means the plugin was accepted for distribution, not that it is sandboxed from all app behavior.
+SmileyChat plugins are trusted local browser code. They can affect the local app experience through the permissions exposed by SmileyChat's plugin API.
+
+Manual artifact installs bypass registry curation and should be treated as unverified trusted code.
 
 ## Removal
 
-Registry entries may be removed or changed if a plugin becomes compromised, abandoned, misleading, or unsafe.
+Registry entries may be removed or changed if a plugin becomes compromised, abandoned, misleading, unsafe, or no longer matches its reviewed artifact.

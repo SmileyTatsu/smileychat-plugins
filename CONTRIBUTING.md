@@ -1,21 +1,18 @@
-# Contributing Plugins
+﻿# Contributing Plugins
 
 Community plugins are added through pull requests to `registry.json`.
 
 ## Submission Requirements
 
 - Add one plugin entry per pull request.
-- Use a stable, unique plugin `id`.
-- Host the plugin archive (.zip) on trusted HTTPS URLs, such as GitHub Releases.
-- Provide a SHA-256 hash for the archive.
-- Ensure the archive extracts to a single root directory or the current directory, containing the plugin contents.
-- Make sure the extracted `plugin.json` has the same `id` as the registry entry.
-
-## Status
-
-Do not self-assign `official`.
-
-Community submissions should use `verified` only after review. Maintainers may adjust status during review.
+- Use a stable, unique, folder-safe plugin `id`.
+- Make sure the packaged `plugin.json` has the same `id` as the registry entry.
+- Host one prebuilt ZIP artifact on a trusted HTTPS URL, preferably GitHub Releases.
+- Use a versioned artifact URL. Do not point at mutable branch archives.
+- Ensure the ZIP contains a root `plugin.json` plus the built files declared by `main` and `styles`.
+- Do not require users to run Git, install dependencies, or build the plugin.
+- Include a `repository` URL when source review is possible.
+- Document permissions and any network behavior in the pull request notes.
 
 ## Not Allowed
 
@@ -23,15 +20,22 @@ Community submissions should use `verified` only after review. Maintainers may a
 - Obfuscated code.
 - Hidden tracking.
 - Unexpected network behavior.
-- Files that write outside plugin-owned storage.
-- Archives containing absolute paths, empty segments, drive letters, or `..`.
+- Artifacts that write outside plugin-owned storage.
+- ZIP entries containing absolute paths, empty segments, drive letters, or `..`.
+- Artifacts that depend on source files, `node_modules`, build scripts, or local developer tools at install time.
 
-## Hashing Archives
+## Review Checklist
 
-On Windows PowerShell:
+Maintainers should verify:
 
-```powershell
-Get-FileHash .\example-plugin.zip -Algorithm SHA256
-```
+- `bun run validate` passes.
+- The artifact URL downloads the reviewed ZIP.
+- The ZIP has a root `plugin.json`.
+- `plugin.json` `id` matches the registry entry.
+- `main` and declared `styles` exist inside the ZIP.
+- The ZIP does not contain source-only or dependency folders such as `src/`, `.git/`, or `node_modules/` unless explicitly justified.
+- Requested permissions match the plugin behavior.
 
-Use the lowercase hash value in `registry.json`.
+## Updating a Plugin
+
+Update the existing registry entry with the new `version` and `artifact.url`. SmileyChat updates registry-installed plugins from the current artifact URL for the same plugin ID.

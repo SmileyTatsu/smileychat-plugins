@@ -1,30 +1,55 @@
-# SmileyChat Plugin Registry
+﻿# SmileyChat Plugin Registry
 
-This repository hosts the public SmileyChat extension registry.
+This repository hosts the verified SmileyChat plugin registry.
 
-SmileyChat fetches `registry.json` from the `main` branch so users can see the latest available extensions without updating the app.
-
-## Registry URL
+SmileyChat loads the Store from this file:
 
 ```text
 https://raw.githubusercontent.com/SmileyTatsu/smileychat-plugins/main/registry.json
 ```
 
-## Registry Status
+The app default in `server/config/runtime-config.ts` points at that URL. Users can override it locally with `SMILEYCHAT_PLUGIN_REGISTRY_URL` for development or private registries.
 
-Registry entries use one of these statuses:
+## What Belongs Here
 
-- `official`: First-party plugins maintained by the SmileyChat core team.
-- `verified`: Community plugins reviewed and approved for this registry.
+- `registry.json`: the live verified plugin list consumed by SmileyChat.
+- `schemas/registry.schema.json`: JSON Schema for registry entries.
+- `examples/`: copyable examples for new entries.
+- `plugins/`: optional human-readable notes for verified plugins.
 
-## Current Registry
+Plugin source code and release artifacts should live in each plugin's own repository. This registry stores metadata and reviewed artifact URLs only.
 
-The live registry is `registry.json`.
+## Registry Entry Shape
 
-Plugin code should live in each plugin's own repository. This registry only lists the download URL to the plugin archive (.zip), metadata, and a SHA-256 hash.
+Registry entries use prebuilt ZIP artifacts:
 
-## User Safety
+```json
+{
+    "id": "example-plugin",
+    "name": "Example Plugin",
+    "description": "Example SmileyChat plugin.",
+    "version": "1.0.0",
+    "author": "Example Author",
+    "category": "tools",
+    "status": "verified",
+    "repository": "https://github.com/SmileyTatsu/example-plugin",
+    "artifact": {
+        "url": "https://github.com/SmileyTatsu/example-plugin/releases/download/v1.0.0/example-plugin-1.0.0.zip"
+    }
+}
+```
 
-Plugins are trusted local code. Install plugins only from sources you trust.
+`artifact.url` must be an HTTPS URL whose path ends in `.zip`.
 
-SmileyChat verifies the archive hash before installation, but reviewed plugins can still affect the local app experience.
+## Status Values
+
+- `official`: first-party plugins maintained by the SmileyChat project.
+- `verified`: reviewed community plugins accepted for the public registry.
+
+Do not self-assign `official`.
+
+## Trust Model
+
+SmileyChat plugins are trusted local browser code. Registry review reduces accidental installation from unknown sources, but it does not sandbox plugin code.
+
+SmileyChat installs prebuilt ZIP artifacts. The user-facing install flow does not require SHA-256 hashes, Git, dependency installation, or plugin builds.
