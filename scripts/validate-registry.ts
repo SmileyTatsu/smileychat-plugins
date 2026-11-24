@@ -25,9 +25,16 @@ const allowedPluginKeys = new Set([
     "category",
     "status",
     "repository",
+    "permissions",
+    "apiVersion",
+    "minAppVersion",
     "artifact",
 ]);
 const allowedArtifactKeys = new Set(["url"]);
+
+/** Mirrors the app's plugin API contract; bump both together. */
+const maxPluginApiVersion = 1;
+const versionPattern = /^v?\d+(\.\d+){0,2}(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$/;
 
 const registry = (await Bun.file("registry.json").json()) as RegistryPayload;
 const errors: string[] = [];
@@ -97,7 +104,72 @@ function validatePlugin(plugin: RegistryPlugin, label: string, seenIds: Set<stri
         }
     }
 
+    validatePermissions(plugin.permissions, `${label}.permissions`);
+    validateApiVersion(plugin.apiVersion, `${label}.apiVersion`);
+
+    if (plugin.minAppVersion !== undefined) {
+        const minAppVersion = requireString(
+            plugin.minAppVersion,
+            `${label}.minAppVersion`,
+        );
+        if (minAppVersion && !versionPattern.test(minAppVersion)) {
+            errors.push(`${label}.minAppVersion must look like 1.2.0.`);
+        }
+    }
+
     validateArtifact(plugin.artifact, `${label}.artifact`);
+}
+
+function validatePermissions(value: unknown, label: string) {
+    if (value === undefined) {
+        return;
+    }
+
+    if (!Array.isArray(value)) {
+        errors.push(`${label} must be an array of strings.`);
+        return;
+    }
+
+    if (value.length > 32) {
+        errors.push(`${label} lists more than 32 permissions.`);
+    }
+
+    const seen = new Set<string>();
+
+    value.forEach((permission, index) => {
+        const entry = requireString(permission, `${label}[${index}]`);
+
+        if (!entry) {
+            return;
+        }
+
+        if (entry.length > 64) {
+            errors.push(`${label}[${index}] is longer than 64 characters.`);
+        }
+
+        if (seen.has(entry)) {
+            errors.push(`${label}[${index}] '${entry}' is duplicated.`);
+        }
+
+        seen.add(entry);
+    });
+}
+
+function validateApiVersion(value: unknown, label: string) {
+    if (value === undefined) {
+        return;
+    }
+
+    if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 1) {
+        errors.push(`${label} must be a whole number of 1 or higher.`);
+        return;
+    }
+
+    if (value > maxPluginApiVersion) {
+        errors.push(
+            `${label} ${value} is newer than the plugin API SmileyChat currently ships (${maxPluginApiVersion}).`,
+        );
+    }
 }
 
 function validateArtifact(value: unknown, label: string) {

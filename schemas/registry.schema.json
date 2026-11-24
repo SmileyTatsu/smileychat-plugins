@@ -80,6 +80,24 @@
                     "format": "uri",
                     "pattern": "^https://"
                 },
+                "permissions": {
+                    "type": "array",
+                    "maxItems": 32,
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 64
+                    }
+                },
+                "apiVersion": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "minAppVersion": {
+                    "type": "string",
+                    "pattern": "^v?\\d+(\\.\\d+){0,2}(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$"
+                },
                 "artifact": {
                     "$ref": "#/$defs/artifact"
                 }
@@ -87,4 +105,3 @@
         }
     }
 }
-
