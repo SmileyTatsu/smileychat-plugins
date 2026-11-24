@@ -19,6 +19,86 @@
       "artifact": {
         "url": "https://github.com/SmileyTatsu/smileychat-official-plugins/releases/download/v1.0.0/smiley-workspace-tools-1.0.0.zip"
       }
+    },
+    {
+      "id": "smiley-chat-summarizer",
+      "name": "Smiley Chat Summarizer",
+      "description": "Maintains editable rolling chat summaries and injects them into prompts.",
+      "version": "1.0.0",
+      "author": "SmileyTatsu",
+      "category": "memory-lore",
+      "status": "official",
+      "repository": "https://github.com/SmileyTatsu/smileychat-official-plugins/tree/main/plugins/chat-summarizer",
+      "permissions": [
+        "state:read",
+        "model:generate",
+        "ui:settings",
+        "ui:header",
+        "ui:modals",
+        "ui:styles",
+        "chat:prompt-inject",
+        "presets:macros",
+        "storage"
+      ],
+      "apiVersion": 1,
+      "artifact": {
+        "url": "https://github.com/SmileyTatsu/smileychat-official-plugins/releases/download/v1.1.0/smiley-chat-summarizer-1.0.0.zip"
+      }
+    },
+    {
+      "id": "smiley-post-processing",
+      "name": "Smiley Post Processing",
+      "description": "Runs a pipeline of AI passes that rewrite each reply before it is saved.",
+      "version": "1.0.0",
+      "author": "SmileyTatsu",
+      "category": "input-output",
+      "status": "official",
+      "repository": "https://github.com/SmileyTatsu/smileychat-official-plugins/tree/main/plugins/post-processing",
+      "permissions": [
+        "state:read",
+        "actions",
+        "model:generate",
+        "ui:settings",
+        "ui:modals",
+        "ui:styles",
+        "ui:message-actions",
+        "chat:output",
+        "presets:macros",
+        "presets:compile",
+        "storage"
+      ],
+      "apiVersion": 1,
+      "artifact": {
+        "url": "https://github.com/SmileyTatsu/smileychat-official-plugins/releases/download/v1.1.0/smiley-post-processing-1.0.0.zip"
+      }
+    },
+    {
+      "id": "smiley-image-generation",
+      "name": "Smiley Image Generation",
+      "description": "Generates NovelAI images from chat context and attaches them to messages.",
+      "version": "1.0.0",
+      "author": "SmileyTatsu",
+      "category": "input-output",
+      "status": "official",
+      "repository": "https://github.com/SmileyTatsu/smileychat-official-plugins/tree/main/plugins/image-generation",
+      "permissions": [
+        "state:read",
+        "model:generate",
+        "ui:settings",
+        "ui:message-actions",
+        "ui:modals",
+        "ui:styles",
+        "actions",
+        "storage",
+        "tools:register",
+        "commands:register",
+        "connections:secrets",
+        "presets:compile"
+      ],
+      "apiVersion": 1,
+      "artifact": {
+        "url": "https://github.com/SmileyTatsu/smileychat-official-plugins/releases/download/v1.1.0/smiley-image-generation-1.0.0.zip"
+      }
     }
   ]
 }
