@@ -99,6 +99,33 @@
       "artifact": {
         "url": "https://github.com/SmileyTatsu/smileychat-official-plugins/releases/download/v1.1.0/smiley-image-generation-1.0.0.zip"
       }
+    },
+    {
+      "id": "smiley-embeddings-memory",
+      "name": "Smiley Embeddings Memory",
+      "description": "Long-chat memory by semantic search. Setup downloads the llama.cpp program from GitHub and an embedding model from Hugging Face and runs it on your computer; with an API source, chat text is sent to that endpoint.",
+      "version": "0.1.0",
+      "author": "SmileyTatsu",
+      "category": "memory-lore",
+      "status": "official",
+      "repository": "https://github.com/SmileyTatsu/smileychat-official-plugins/tree/main/plugins/smiley-embeddings-memory",
+      "permissions": [
+        "state:read",
+        "actions",
+        "chat:prompt-inject",
+        "chat:message-update",
+        "ui:settings",
+        "ui:header",
+        "ui:modals",
+        "ui:styles",
+        "storage",
+        "server:process"
+      ],
+      "apiVersion": 1,
+      "minAppVersion": "0.0.6",
+      "artifact": {
+        "url": "https://github.com/SmileyTatsu/smileychat-official-plugins/releases/download/v1.2.0/smiley-embeddings-memory-0.1.0.zip"
+      }
     }
   ]
 }
